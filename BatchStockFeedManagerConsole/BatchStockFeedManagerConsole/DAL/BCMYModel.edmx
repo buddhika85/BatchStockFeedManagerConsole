@@ -1,0 +1,215 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="BCMYModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'BCMY.dbo.vProductInfo' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vProductInfo">
+          <Key>
+            <PropertyRef Name="productlistid" />
+            <PropertyRef Name="model" />
+            <PropertyRef Name="quantity" />
+            <PropertyRef Name="weight_grams" />
+            <PropertyRef Name="volume_cm3" />
+            <PropertyRef Name="productbrandid" />
+            <PropertyRef Name="productbrandname" />
+            <PropertyRef Name="marketvalue" />
+            <PropertyRef Name="productActionName" />
+            <PropertyRef Name="producttypeid" />
+            <PropertyRef Name="ProductCatergoryName" />
+            <PropertyRef Name="conditionName" />
+          </Key>
+          <Property Name="productlistid" Type="int" Nullable="false" />
+          <Property Name="model" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="quantity" Type="int" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="100" />
+          <Property Name="weight_grams" Type="int" Nullable="false" />
+          <Property Name="volume_cm3" Type="int" Nullable="false" />
+          <Property Name="product_image" Type="varchar" MaxLength="100" />
+          <Property Name="abbr" Type="varchar" MaxLength="50" />
+          <Property Name="model_public" Type="varchar" MaxLength="50" />
+          <Property Name="description_public" Type="varchar" MaxLength="50" />
+          <Property Name="dateUpdated" Type="datetime" />
+          <Property Name="status" Type="varchar" MaxLength="10" />
+          <Property Name="productbrandid" Type="int" Nullable="false" />
+          <Property Name="productbrandname" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="marketvalue" Type="money" Nullable="false" />
+          <Property Name="actionID" Type="int" />
+          <Property Name="productActionName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="producttypeid" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="productcategory" Type="int" />
+          <Property Name="ProductCatergoryName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="productcondition" Type="int" />
+          <Property Name="conditionName" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <Function Name="SP_FiterProducts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="categoryName" Type="varchar" Mode="In" />
+          <Parameter Name="virginOrNot" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="BCMYModelStoreContainer">
+          <EntitySet Name="vProductInfo" EntityType="Self.vProductInfo" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vProductInfo].[productlistid] AS [productlistid], 
+    [vProductInfo].[model] AS [model], 
+    [vProductInfo].[quantity] AS [quantity], 
+    [vProductInfo].[Description] AS [Description], 
+    [vProductInfo].[weight_grams] AS [weight_grams], 
+    [vProductInfo].[volume_cm3] AS [volume_cm3], 
+    [vProductInfo].[product_image] AS [product_image], 
+    [vProductInfo].[abbr] AS [abbr], 
+    [vProductInfo].[model_public] AS [model_public], 
+    [vProductInfo].[description_public] AS [description_public], 
+    [vProductInfo].[dateUpdated] AS [dateUpdated], 
+    [vProductInfo].[status] AS [status], 
+    [vProductInfo].[productbrandid] AS [productbrandid], 
+    [vProductInfo].[productbrandname] AS [productbrandname], 
+    [vProductInfo].[marketvalue] AS [marketvalue], 
+    [vProductInfo].[actionID] AS [actionID], 
+    [vProductInfo].[productActionName] AS [productActionName], 
+    [vProductInfo].[producttypeid] AS [producttypeid], 
+    [vProductInfo].[productcategory] AS [productcategory], 
+    [vProductInfo].[ProductCatergoryName] AS [ProductCatergoryName], 
+    [vProductInfo].[productcondition] AS [productcondition], 
+    [vProductInfo].[conditionName] AS [conditionName]
+    FROM [dbo].[vProductInfo] AS [vProductInfo]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BCMYModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="vProductInfo">
+          <Key>
+            <PropertyRef Name="productlistid" />
+            <PropertyRef Name="model" />
+            <PropertyRef Name="quantity" />
+            <PropertyRef Name="weight_grams" />
+            <PropertyRef Name="volume_cm3" />
+            <PropertyRef Name="productbrandid" />
+            <PropertyRef Name="productbrandname" />
+            <PropertyRef Name="marketvalue" />
+            <PropertyRef Name="productActionName" />
+            <PropertyRef Name="producttypeid" />
+            <PropertyRef Name="ProductCatergoryName" />
+            <PropertyRef Name="conditionName" />
+          </Key>
+          <Property Name="productlistid" Type="Int32" Nullable="false" />
+          <Property Name="model" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="quantity" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="weight_grams" Type="Int32" Nullable="false" />
+          <Property Name="volume_cm3" Type="Int32" Nullable="false" />
+          <Property Name="product_image" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="abbr" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="model_public" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="description_public" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="dateUpdated" Type="DateTime" Precision="3" />
+          <Property Name="status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="productbrandid" Type="Int32" Nullable="false" />
+          <Property Name="productbrandname" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="marketvalue" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="actionID" Type="Int32" />
+          <Property Name="productActionName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="producttypeid" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="productcategory" Type="Int32" />
+          <Property Name="ProductCatergoryName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="productcondition" Type="Int32" />
+          <Property Name="conditionName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="BCMYEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="vProductInfoes" EntityType="Self.vProductInfo" />
+          <FunctionImport Name="SP_FiterProducts" ReturnType="Collection(BCMYModel.SP_FiterProducts_Result)">
+            <Parameter Name="categoryName" Mode="In" Type="String" />
+            <Parameter Name="virginOrNot" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="SP_FiterProducts_Result">
+          <Property Type="Int32" Name="productcondition" Nullable="true" />
+          <Property Type="String" Name="conditionName" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="productbrandid" Nullable="false" />
+          <Property Type="String" Name="productbrandname" Nullable="false" MaxLength="40" />
+          <Property Type="String" Name="model" Nullable="false" MaxLength="150" />
+          <Property Type="Int32" Name="actionID" Nullable="true" />
+          <Property Type="String" Name="productActionName" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="productlistid" Nullable="false" />
+          <Property Type="Int32" Name="productcategory" Nullable="true" />
+          <Property Type="String" Name="ProductCatergoryName" Nullable="false" MaxLength="100" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BCMYModelStoreContainer" CdmEntityContainer="BCMYEntities">
+          <EntitySetMapping Name="vProductInfoes">
+            <EntityTypeMapping TypeName="BCMYModel.vProductInfo">
+              <MappingFragment StoreEntitySet="vProductInfo">
+                <ScalarProperty Name="productlistid" ColumnName="productlistid" />
+                <ScalarProperty Name="model" ColumnName="model" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="weight_grams" ColumnName="weight_grams" />
+                <ScalarProperty Name="volume_cm3" ColumnName="volume_cm3" />
+                <ScalarProperty Name="product_image" ColumnName="product_image" />
+                <ScalarProperty Name="abbr" ColumnName="abbr" />
+                <ScalarProperty Name="model_public" ColumnName="model_public" />
+                <ScalarProperty Name="description_public" ColumnName="description_public" />
+                <ScalarProperty Name="dateUpdated" ColumnName="dateUpdated" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="productbrandid" ColumnName="productbrandid" />
+                <ScalarProperty Name="productbrandname" ColumnName="productbrandname" />
+                <ScalarProperty Name="marketvalue" ColumnName="marketvalue" />
+                <ScalarProperty Name="actionID" ColumnName="actionID" />
+                <ScalarProperty Name="productActionName" ColumnName="productActionName" />
+                <ScalarProperty Name="producttypeid" ColumnName="producttypeid" />
+                <ScalarProperty Name="productcategory" ColumnName="productcategory" />
+                <ScalarProperty Name="ProductCatergoryName" ColumnName="ProductCatergoryName" />
+                <ScalarProperty Name="productcondition" ColumnName="productcondition" />
+                <ScalarProperty Name="conditionName" ColumnName="conditionName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SP_FiterProducts" FunctionName="BCMYModel.Store.SP_FiterProducts">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BCMYModel.SP_FiterProducts_Result">
+                <ScalarProperty Name="productcondition" ColumnName="productcondition" />
+                <ScalarProperty Name="conditionName" ColumnName="conditionName" />
+                <ScalarProperty Name="productbrandid" ColumnName="productbrandid" />
+                <ScalarProperty Name="productbrandname" ColumnName="productbrandname" />
+                <ScalarProperty Name="model" ColumnName="model" />
+                <ScalarProperty Name="actionID" ColumnName="actionID" />
+                <ScalarProperty Name="productActionName" ColumnName="productActionName" />
+                <ScalarProperty Name="productlistid" ColumnName="productlistid" />
+                <ScalarProperty Name="productcategory" ColumnName="productcategory" />
+                <ScalarProperty Name="ProductCatergoryName" ColumnName="ProductCatergoryName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
