@@ -117,6 +117,7 @@ namespace BatchStockFeedManagerConsole
             catch (Exception ex)
             {
                 wasCreated = false;
+                throw ex;
             }
             return wasCreated;
         }
