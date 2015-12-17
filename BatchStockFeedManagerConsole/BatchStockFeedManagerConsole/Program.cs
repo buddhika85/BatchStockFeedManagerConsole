@@ -17,35 +17,19 @@ namespace BatchStockFeedManagerConsole
 
             try
             {
-                // laser virgin
-                bool wasCreated = CreateExcelSheet("laser", "virgin", string.Format("laser_virgin_{0}", DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss", CultureInfo.InvariantCulture)));
-                Console.WriteLine(wasCreated ? 
-                                    "Laser - Virgin - excel file created" : 
-                                    "Error - Laser - Virgin - excel file not created");
-
-                // inkjet virgin
-                wasCreated = CreateExcelSheet("inkjet", "virgin", string.Format("inkjet_virgin_{0}", DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss", CultureInfo.InvariantCulture)));
-                Console.WriteLine(wasCreated ?
-                                    "Inkjet - Virgin - excel file created" :
-                                    "Error - Inkjet - Virgin - excel file not created");
-
-                // inktank virgin
-                wasCreated = CreateExcelSheet("inktank", "virgin", string.Format("inktank_virgin_{0}", DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss", CultureInfo.InvariantCulture)));
-                Console.WriteLine(wasCreated ?
-                                    "Inktank - Virgin - excel file created" :
-                                    "Error - Inktank - Virgin - excel file not created");
-
-                // laser non virgin
-                wasCreated = CreateExcelSheet("laser", "no", string.Format("laser_nonvirgin_{0}", DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss", CultureInfo.InvariantCulture)));
-                Console.WriteLine(wasCreated ?
-                                    "Laser - Non Virgin - excel file created" :
-                                    "Error - Laser - Non Virgin - excel file not created");
-
-                // inkjet virgin
-                wasCreated = CreateExcelSheet("inkjet", "no", string.Format("inkjet_nonvirgin_{0}", DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss", CultureInfo.InvariantCulture)));
-                Console.WriteLine(wasCreated ?
-                                    "Inkjet - Non Virgin - excel file created" :
-                                    "Error - Inkjet - Non Virgin - excel file not created");
+                Console.WriteLine("What do want to do? input for 1 for create input 2 for read");
+                string input = Console.ReadLine();
+                if (input == "1")
+                {
+                    Create();
+                }
+                else if (input == "2")
+                {
+                    Read();
+                }
+                else {
+                    Console.WriteLine("\nInvalid input - input can only be 1 or 2");
+                }
             }
             catch (Exception ex)
             {                
@@ -57,9 +41,67 @@ namespace BatchStockFeedManagerConsole
         }
 
         /// <summary>
+        /// A helper which reads excel file
+        /// </summary>
+        private static void Read()
+        {
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {                
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// A helper wich creates excel files
+        /// </summary>
+        private static void Create()
+        {
+            try
+            {
+                // laser virgin
+                bool wasCreated = WriteExcelSheet("laser", "virgin", string.Format("laser_virgin_{0}", DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss", CultureInfo.InvariantCulture)));
+                Console.WriteLine(wasCreated ?
+                                    "Laser - Virgin - excel file created" :
+                                    "Error - Laser - Virgin - excel file not created");
+
+                // inkjet virgin
+                wasCreated = WriteExcelSheet("inkjet", "virgin", string.Format("inkjet_virgin_{0}", DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss", CultureInfo.InvariantCulture)));
+                Console.WriteLine(wasCreated ?
+                                    "Inkjet - Virgin - excel file created" :
+                                    "Error - Inkjet - Virgin - excel file not created");
+
+                // inktank virgin
+                wasCreated = WriteExcelSheet("inktank", "virgin", string.Format("inktank_virgin_{0}", DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss", CultureInfo.InvariantCulture)));
+                Console.WriteLine(wasCreated ?
+                                    "Inktank - Virgin - excel file created" :
+                                    "Error - Inktank - Virgin - excel file not created");
+
+                // laser non virgin
+                wasCreated = WriteExcelSheet("laser", "no", string.Format("laser_nonvirgin_{0}", DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss", CultureInfo.InvariantCulture)));
+                Console.WriteLine(wasCreated ?
+                                    "Laser - Non Virgin - excel file created" :
+                                    "Error - Laser - Non Virgin - excel file not created");
+
+                // inkjet virgin
+                wasCreated = WriteExcelSheet("inkjet", "no", string.Format("inkjet_nonvirgin_{0}", DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss", CultureInfo.InvariantCulture)));
+                Console.WriteLine(wasCreated ?
+                                    "Inkjet - Non Virgin - excel file created" :
+                                    "Error - Inkjet - Non Virgin - excel file not created");
+            }
+            catch (Exception ex)
+            {                
+                throw ex;
+            }
+        }
+
+        /// <summary>
         /// Helper method which creates excel sheets
         /// </summary>
-        private static bool CreateExcelSheet(string category, string virginOrNot, string fileName)
+        private static bool WriteExcelSheet(string category, string virginOrNot, string fileName)
         {
             bool wasCreated = false;
             try
