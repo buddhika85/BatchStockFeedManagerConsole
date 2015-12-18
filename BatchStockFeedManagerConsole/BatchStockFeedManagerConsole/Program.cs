@@ -1,7 +1,9 @@
 ﻿using BatchStockFeedManagerConsole.DAL;
+using BatchStockFeedManagerConsole.DAL.ViewModels;
 using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -25,7 +27,7 @@ namespace BatchStockFeedManagerConsole
                 }
                 else if (input == "2")
                 {
-                    Read();
+                    ReadAndBatchUpload();
                 }
                 else {
                     Console.WriteLine("\nInvalid input - input can only be 1 or 2");
@@ -43,11 +45,33 @@ namespace BatchStockFeedManagerConsole
         /// <summary>
         /// A helper which reads excel file
         /// </summary>
-        private static void Read()
+        private static void ReadAndBatchUpload()
         {
             try
-            {
-
+            {                
+                IList<ProductStockUserDefinedType> currentStockCounts = new List<ProductStockUserDefinedType>() { 
+                    new ProductStockUserDefinedType() {
+                        productId = 1,
+                        quantity = 50,
+                        stockCountAmended = "yes",
+                        lastAmendedDate = DateTime.Now,
+                        lastIncrementDate = null
+                    },
+                    new ProductStockUserDefinedType() {
+                        productId = 2,
+                        quantity = 60,
+                        stockCountAmended = "no",
+                        lastAmendedDate = DateTime.Now,
+                        lastIncrementDate = null
+                    },
+                };
+                int result = new DataAccessor().BatchUpload(currentStockCounts);
+                Console.WriteLine("result : " + result);
+                //foreach (ProductStockUserDefinedType item in result)
+                //{
+                //    Console.WriteLine(item.productId + " | " + item.quantity + " | " + item.stockCountAmended
+                //            + item.lastAmendedDate + " | " + item.lastIncrementDate);
+                //}
             }
             catch (Exception ex)
             {                

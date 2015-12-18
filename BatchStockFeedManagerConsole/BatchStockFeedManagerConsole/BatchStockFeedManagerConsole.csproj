@@ -77,6 +77,7 @@
     <Compile Include="DAL\SP_FiterProducts_Result.cs">
       <DependentUpon>BCMYModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\ViewModels\ProductStockUserDefinedType.cs" />
     <Compile Include="DAL\vProductInfo.cs">
       <DependentUpon>BCMYModel.tt</DependentUpon>
     </Compile>
