@@ -9,6 +9,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using System.Configuration;
+using System.Collections.Specialized;
+using System.IO;
+
+
 
 namespace BatchStockFeedManagerConsole
 {
@@ -48,35 +53,93 @@ namespace BatchStockFeedManagerConsole
         private static void ReadAndBatchUpload()
         {
             try
-            {                
-                IList<ProductStockUserDefinedType> currentStockCounts = new List<ProductStockUserDefinedType>() { 
-                    new ProductStockUserDefinedType() {
-                        productId = 1,
-                        quantity = 50,
-                        stockCountAmended = "yes",
-                        lastAmendedDate = DateTime.Now,
-                        lastIncrementDate = null
-                    },
-                    new ProductStockUserDefinedType() {
-                        productId = 2,
-                        quantity = 60,
-                        stockCountAmended = "no",
-                        lastAmendedDate = DateTime.Now,
-                        lastIncrementDate = null
-                    },
-                };
-                int result = new DataAccessor().BatchUpload(currentStockCounts);
-                Console.WriteLine("result : " + result);
-                //foreach (ProductStockUserDefinedType item in result)
-                //{
-                //    Console.WriteLine(item.productId + " | " + item.quantity + " | " + item.stockCountAmended
-                //            + item.lastAmendedDate + " | " + item.lastIncrementDate);
-                //}
+            { 
+                // Read excel sheet
+                IList<ProductStockUserDefinedType> currentStockCounts = ReadExcelSheet();               
+                string result = new DataAccessor().BatchUpload(currentStockCounts);
+                Console.WriteLine("result : " + result);                
             }
             catch (Exception ex)
             {                
                 throw ex;
             }
+        }
+
+        /// <summary>
+        /// A helper method to read the excel sheet
+        /// </summary>
+        private static IList<ProductStockUserDefinedType> ReadExcelSheet()
+        {
+            IList<ProductStockUserDefinedType> excelData = new List<ProductStockUserDefinedType>();
+            try
+            {
+                // get file locations
+                NameValueCollection appSettings = ConfigurationManager.AppSettings;
+                string fileLocation = appSettings["laserVirgin"];                       // laser virgin
+                excelData = ReadExcelToAList(excelData, fileLocation);
+
+                fileLocation = appSettings["inkjetVirgin"];                             // inkjet virgin
+                excelData = ReadExcelToAList(excelData, fileLocation);
+
+                fileLocation = appSettings["inktankVirgin"];                            // inktank virgin
+                excelData = ReadExcelToAList(excelData, fileLocation);
+
+                fileLocation = appSettings["laserNonVirgin"];                           // laser non virgin
+                excelData = ReadExcelToAList(excelData, fileLocation);
+
+                fileLocation = appSettings["inkjetNonVirgin"];                          // inkjet non virgin
+                excelData = ReadExcelToAList(excelData, fileLocation);
+            }
+            catch (Exception ex)
+            {                
+                throw ex;
+            }
+            return excelData;
+        }
+
+        /// <summary>
+        /// A helper method to read excel sheet and create a list and return it
+        /// </summary>
+        private static IList<ProductStockUserDefinedType> ReadExcelToAList(IList<ProductStockUserDefinedType> excelData, string laserVirginExcelLoc)
+        {
+            try
+            {
+                FileInfo file = new FileInfo(laserVirginExcelLoc);
+                using (ExcelPackage package = new ExcelPackage(file))
+                {
+                    ExcelWorkbook workbook = package.Workbook;
+                    if (workbook != null)
+                    {
+                        ExcelWorksheet firstWorksheet = workbook.Worksheets.First();
+                        for (int rowNumber = 2; rowNumber <= firstWorksheet.Dimension.End.Row; rowNumber++)
+                        {
+                            ExcelRange row = firstWorksheet.Cells[rowNumber, 1, rowNumber, firstWorksheet.Dimension.End.Column];
+
+                            ProductStockUserDefinedType product = new ProductStockUserDefinedType();
+                            // productId
+                            string cellName = string.Format("E{0}", rowNumber);
+                            product.productId = int.Parse(firstWorksheet.Cells[cellName].Value.ToString().Trim());
+
+                            // quantity
+                            cellName = string.Format("F{0}", rowNumber);
+                            product.quantity = int.Parse(firstWorksheet.Cells[cellName].Value.ToString().Trim());
+
+                            // stockCountAmended, lastAmendedDate, lastIncrementDate
+                            product.stockCountAmended = "yes";
+                            product.lastAmendedDate = DateTime.Now;
+                            product.lastIncrementDate = null;
+
+                            excelData.Add(product);
+                        }
+                    }                
+                }
+            }
+            catch (Exception ex)
+            {                
+                throw ex;
+            }
+
+            return excelData;
         }
 
         /// <summary>
@@ -110,7 +173,7 @@ namespace BatchStockFeedManagerConsole
                                     "Laser - Non Virgin - excel file created" :
                                     "Error - Laser - Non Virgin - excel file not created");
 
-                // inkjet virgin
+                // inkjet non virgin
                 wasCreated = WriteExcelSheet("inkjet", "no", string.Format("inkjet_nonvirgin_{0}", DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss", CultureInfo.InvariantCulture)));
                 Console.WriteLine(wasCreated ?
                                     "Inkjet - Non Virgin - excel file created" :
@@ -148,6 +211,7 @@ namespace BatchStockFeedManagerConsole
                     worksheet.Cells["H1"].Value = "Qty per box";
 
                     int rowNumExcel = 2;
+                    Random rnd = new Random();
                     foreach (SP_FiterProducts_Result item in result)
                     {
                         // condition
@@ -169,6 +233,10 @@ namespace BatchStockFeedManagerConsole
                         // product Id
                         cellName = string.Format("E{0}", rowNumExcel);
                         worksheet.Cells[cellName].Value = item.productlistid;
+
+                        // add quantities - for testing
+                        cellName = string.Format("F{0}", rowNumExcel);
+                        worksheet.Cells[cellName].Value = rnd.Next(500, 1000);
                         
                         ++rowNumExcel;
                     }                 
