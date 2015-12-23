@@ -235,8 +235,8 @@ namespace BatchStockFeedManagerConsole
                         worksheet.Cells[cellName].Value = item.productlistid;
 
                         // add quantities - for testing
-                        cellName = string.Format("F{0}", rowNumExcel);
-                        worksheet.Cells[cellName].Value = rnd.Next(500, 1000);
+                        //cellName = string.Format("F{0}", rowNumExcel);
+                        //worksheet.Cells[cellName].Value = rnd.Next(500, 1000);
                         
                         ++rowNumExcel;
                     }                 
